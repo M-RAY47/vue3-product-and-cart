@@ -113,7 +113,7 @@
               </form>
             </div>
             <div class="card-footer">
-              <button class="btn btn-light">Add to cart</button>
+              <button class="btn btn-light" @click="addToCart()">Add to cart</button>
             </div>
           </div>
 
@@ -173,12 +173,17 @@
               carrots:0,
               pineapples: 0,
               cherries: 0
-            }g
+            },
+            cart: {
+              carrots:0,
+              pineapples: 0,
+              cherries: 0
+            }
           }
         },
-        methods() {
-          addCartButton: ()=> {
-            this.inventory.push()
+        methods: {
+          addToCart(type, quantity) {
+            this.cart[type]+=quantity;
           }
         }
       })
