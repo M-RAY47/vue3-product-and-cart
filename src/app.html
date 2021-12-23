@@ -75,7 +75,9 @@
               </form>
             </div>
             <div class="card-footer">
-              <button class="btn btn-light" @click="addToCart('carrots')">Add to cart</button>
+              <button class="btn btn-light" @click="addToCart('carrots')">
+                Add to cart
+              </button>
             </div>
           </div>
 
@@ -184,6 +186,7 @@
         methods: {
           addToCart(type) {
             this.cart[type]+= this.inventory[type];
+            console.log(this.cart)
           },
           remCart()
         }
