@@ -165,7 +165,7 @@
 
       </main>
 
-      <sidebar />
+      <sidebar v-if="showSidebar"/>
 
       <footer>
       </footer>
@@ -177,6 +177,7 @@
       let app = Vue.createApp({
         data() {
           return {
+            showSidebar: false,
             inventory: {
               carrots:0,
               pineapples: 0,
@@ -194,8 +195,8 @@
             this.cart[type]+= this.inventory[type];
             console.log(this.cart)
           },
-          remCart(){
-
+          toggleSideBar(){
+            this.showSidebar = !this.showSidebar;
           }
         }
       })
