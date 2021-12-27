@@ -53,7 +53,7 @@
                     <label>Type:</label>
                   </div>
                   <div class="cell">
-                    <em> {{ product.type }}</em>
+                    <em> {{ product[type] }}</em>
                   </div>
                 </div>
                 <div class="row">
@@ -69,7 +69,7 @@
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
-                    <input type="number" v-model.number="product.">
+                    <input type="number" v-model.number="product.id">
                   </div>
                 </div>
               </form>
@@ -108,9 +108,9 @@
           }
         },
         methods: {
-          addToCart(type) {
-            this.cart[type]+= this.inventory[type];
-            console.log(this.cart)
+          // addToCart(type) {
+          //   this.cart[type]+= this.inventory[type];
+          //   console.log(this.cart)
           },
           toggleSideBar(){
             this.showSidebar = !this.showSidebar;
