@@ -90,7 +90,6 @@
         :toggle="toggleSideBar"
         :cart="cart"
         :inventory="inventory"
-        :removeCart="rmCart"
       />
 
       <footer>
@@ -123,10 +122,8 @@
           const data = await res.json();
           this.inventory = data
           console.log(this.inventory)
-        },
-        removeCart(name) {
-          delete this.cart[name];
         }
+        
       })
         
         app.component('sidebar', {
@@ -137,6 +134,9 @@
                 return product.name === name
               });
               return food.price.USD;
+            },
+            removeItem(name) {
+              delete this.cart[name];
             }
           },
           template: 
@@ -172,7 +172,7 @@
                       <td class="center">{{ food }}</td>
                       <td>\${{ food *getPrice(key) }}</td>
                       <td class="center">
-                        <button class="btn btn-light cart-remove">
+                        <button @click="removeItem(key)" class="btn btn-light cart-remove">
                           &times;
                         </button>
                       </td>
@@ -180,7 +180,7 @@
                   </tbody>
                 </table>
 
-                <p class="center"><em>No items in cart</em></p>
+                <p class="center" v-if="!Object.keys(cart).length"><em>No items in cart</em></p>
                 <div class="spread">
                   <span><strong>Total:</strong> total</span>
                   <button class="btn btn-light">Checkout</button>
