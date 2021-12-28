@@ -137,6 +137,12 @@
             },
             removeItem(name) {
               delete this.cart[name];
+            },
+            calculateTotal() {
+              const total = Object.entries(this.cart).reduce((acc, item) => {
+                return acc +(item[1] * this.getPrice(item[0]));
+              }, 0)
+              return total.toFixed(2)
             }
           },
           template: 
@@ -170,7 +176,7 @@
                       <td>{{ key }}</td>
                       <td>\${{ getPrice(key) }}</td>
                       <td class="center">{{ food }}</td>
-                      <td>\${{ food *getPrice(key) }}</td>
+                      <td>\${{ (food *getPrice(key)).toFixed(2) }}</td>
                       <td class="center">
                         <button @click="removeItem(key)" class="btn btn-light cart-remove">
                           &times;
@@ -182,7 +188,7 @@
 
                 <p class="center" v-if="!Object.keys(cart).length"><em>No items in cart</em></p>
                 <div class="spread">
-                  <span><strong>Total:</strong> total</span>
+                  <span><strong>Total:</strong> \$ {{ calculateTotal() }}</span>
                   <button class="btn btn-light">Checkout</button>
                 </div>
               </div>
