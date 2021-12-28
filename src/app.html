@@ -46,14 +46,14 @@
               {{ product.name }}
             </div>
             <div class="card-body">
-              <i class="icofont-10x {{ product-icon }}"></i>
+              <i class="icofont-10x icofont-{{ product.icon}}"></i>
               <form>
                 <div class="row">
                   <div class="cell">
                     <label>Type:</label>
                   </div>
                   <div class="cell">
-                    <em> {{ product[type] }}</em>
+                    <em> {{ product['type'] }}</em>
                   </div>
                 </div>
                 <div class="row">
@@ -69,7 +69,7 @@
                     <label>Quantity:</label>
                   </div>
                   <div class="cell">
-                    <input type="number" v-model.number="product.id">
+                    <input type="number" v-model.number="product.quantity">
                   </div>
                 </div>
               </form>
@@ -103,15 +103,16 @@
         data() {
           return {
             showSidebar: false,
-            inventory: {},
+            inventory: [],
             cart: {}
           }
         },
         methods: {
-          // addToCart(type) {
-          //   this.cart[type]+= this.inventory[type];
-          //   console.log(this.cart)
-          // },
+          addToCart(name, index) {
+            if(!this.cart[name]) this.cart[name] =0
+            this.cart[name] += this.inventory[index].quantity
+            this.inventory[index].quantity = 0
+          },
           toggleSideBar(){
             this.showSidebar = !this.showSidebar;
           },
