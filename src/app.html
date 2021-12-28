@@ -75,7 +75,7 @@
               </form>
             </div>
             <div class="card-footer">
-              <button class="btn btn-light" @click="addToCart(product)">
+              <button class="btn btn-light" @click="addToCart(product.name, i)">
                 Add to cart
               </button>
             </div>
@@ -90,6 +90,7 @@
         :toggle="toggleSideBar"
         :cart="cart"
         :inventory="inventory"
+        :removeCart="rmCart"
       />
 
       <footer>
@@ -122,14 +123,20 @@
           const data = await res.json();
           this.inventory = data
           console.log(this.inventory)
+        },
+        removeCart(name) {
+          delete this.cart[name];
         }
       })
         
         app.component('sidebar', {
           props: ['toggle','cart','inventory'],
-          computed() {
-            cartTotal: {
-              return (this.cart.carrots * 4.82).toFixed(2);
+          methods: {
+            getPrice(name) {
+              const food = this.inventory.find(product => {
+                return product.name === name
+              });
+              return food.price.USD;
             }
           },
           template: 
@@ -158,12 +165,12 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr>
-                      <td><i class="icofont-carrot icofont-3x"></i></td>
-                      <td>Carrot</td>
-                      <td>$4.82</td>
-                      <td class="center">{{ cart.carrots }}</td>
-                      <td>\${{ cart.carrots * 4.82 }}</td>
+                    <tr v-for="(food, key, i) in cart" :key="i">
+                      <td><i class="icofont-{{ food.icon }} icofont-3x"></i></td>
+                      <td>{{ key }}</td>
+                      <td>\${{ getPrice(key) }}</td>
+                      <td class="center">{{ food }}</td>
+                      <td>\${{ food *getPrice(key) }}</td>
                       <td class="center">
                         <button class="btn btn-light cart-remove">
                           &times;
